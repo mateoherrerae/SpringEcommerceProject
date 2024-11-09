@@ -1,0 +1,325 @@
+Servlets
+
+
+serv let
+they accept the request, it will process the request, it will send data back to the client
+
+no se pueden correr estos en jvm si no que se corren en los servlet containers
+Un Servlet es una clase en Java que se utiliza para extender las capacidades de un servidor web
+este hace
+manejo de solicitudes
+generacion de respuestas
+interaccion con otros componentes
+
+[
+if we want to build a console application we use .jar
+
+but if i want to build a web application we use.war
+because it runs in tomcat
+
+maven file:
+we use jakart idk why but jakarta lol
+and the tomcat embed core
+
+173. running tomcat
+
+=para q una clase sea servlet le hay q extender la clase HttpServlet
+=metodo service: service gets executed whenever you send a request
+
+public class HelloServlet extends HttpServlet{
+    public void service(HttpServletRequest req, HttpServletResponse res){
+        System.out.println("Hello World");
+    }
+}
+
+
+en app se inicia tomcat de la siguiente manera:
+
+Tomcat tomcat = new Tomcat();
+tomcat.start();
+tomcat.getServer().await();
+
+
+174 servlet mapping
+
+en cada directorio hay q usar @WebServlet("ruta")
+ponele la ruta de la pagina que quieres que se ejecute
+
+
+Context context = tomcat.addContext("", "/var/www");
+
+se utiliza para añadir un contexto a la instancia de Tomcat que has creado
+En Tomcat, un "contexto" representa una aplicación web. Es un espacio donde se despliega una aplicación y se define cómo se comporta
+El método addContext se utiliza para añadir un nuevo contexto a Tomcat. Este método toma dos parámetros:
+
+El primer parámetro es el "path" del contexto
+El segundo parámetro es la ruta del directorio donde se encuentran los archivos de la aplicación web.
+
+context.addServletMappingDecoded();
+
+luego aca le tenemos q pasar dos parametros url el nomber del servlet
+
+asi quedaria app:
+
+System.out.println("Hello World!");
+Tomcat tomcat = new Tomcat();
+tomcat.setPort(8888); // Establece el puerto si es necesario
+
+// Crear el contexto
+Context context = tomcat.addContext("", null);
+
+// Añadir el servlet directamente al contexto
+Tomcat.addServlet(context, "H1", new HelloServlet());
+context.addServletMappingDecoded("/hello", "H1");
+
+// Iniciar el servidor luego del mapeo:
+tomcat.start();
+System.out.println("Tomcat started on port 8080");
+tomcat.getServer().await();
+
+
+y asi helloservlet:
+
+public class HelloServlet extends HttpServlet {
+    protected void service(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        PrintWriter out = res.getWriter();
+        out.println("Hello from HelloServlet!");
+        //o podria ser asi
+        res.getWriter().println("Hello from HelloServlet!");
+    }
+}
+
+175 responding to the client
+public class HelloServlet extends HttpServlet {
+    protected void service(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        PrintWriter out = res.getWriter();
+
+        res.setContentType("text/html");
+
+        out.println("<h1>Hello World</h1>");
+    }
+}
+
+methods http:
+get, post, put, delete
+if we want data from the server we use a get request
+send data we use post request
+delete somehting we use delete request
+put to update something
+
+176 introduction to MVC
+
+servlet is the responsable to handle the request and the
+jsp is the responsable to create that beatiful page which u want
+
+
+jakarta server pages
+
+mvc: model view controller
+Modelo (Model):
+
+Responsabilidad: El modelo representa la lógica de negocio y los datos de la aplicación
+
+(View):
+
+Responsabilidad: La vista es la interfaz de usuario de la aplicación. Se encarga de
+presentar los datos al usuario y de recibir la entrada del usuario.
+
+Controller):
+
+Responsabilidad: El controlador actúa como intermediario entre el modelo y la vista.
+Recibe las entradas del usuario desde la vista, procesa esas entradas
+(posiblemente interactuando con el modelo) y devuelve la respuesta adecuada a la vista.
+
+
+
+
+
+
+
+
+
+
+
+MOVEMOS A SpringBootWeb1
+ANTES USABAMOS UNA CONFIGURACION MANUAL
+ACA USAMOS SPRING BOOT WEB DE VERDA
+
+
+seguimos aca fue:
+creamos el index.jsp
+<%@ page language="java"%>
+<html>
+   <body>
+        <h1>
+            Hello World!!!
+        </h1>
+   </body>
+</html>
+
+creating a controller:
+q actua como intermediario entre el modelo y la vista
+
+en controller hay q llamar al archivo jsp
+
+spring boot no soporta jsp pages asi que hay q convertir jsp into a servlet
+
+so para convertir esto necesitmaos tomcat jasper:
+
+The @PostMapping annotation is used to map HTTP POST requests to specific
+ handler methods in Spring MVC controllers
+182.
+Proyecto sumar dos numeros:
+package com.telusko.SpringBootWeb1;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+public class HomeController {
+    @RequestMapping("/")
+    public String home() {
+        return "index.jsp";
+    }
+
+    @PostMapping("/sumar")
+    public String sumar(@RequestParam("num1") int numero1, int num2, HttpSession session) {
+        // ya pasamos lso valores asi que no necesitamos esto
+        // int num1 = Integer.parseInt(req.getParameter("num1"));
+        // int num2 = Integer.parseInt(req.getParameter("num2"));
+        // numero uno seria num1 del jsp file
+        int result = numero1 + num2;
+        session.setAttribute("result", result);
+
+        return "result.jsp";
+    }
+}
+
+y en archivo jsp puede acceder al resultado de la siguiente forma:
+${result}
+
+
+
+185 model object:
+
+Usando model de mes de Session:
+
+Using Model is generally better for passing data to the view in a single
+request-response cycle. It is more straightforward and avoids storing
+data in the session, which can be more resource-intensive and less secure.
+
+@PostMapping("/sumar")
+    public String sumar(@RequestParam("num1") int numero1, int num2, Model model) {
+
+        int result = numero1 + num2;
+        model.addAttribute("result", result);
+        return "result.jsp";
+    }
+
+
+186. prefix y  suffix
+ prefix y el suffix se utilizan para configurar las rutas de las vistas
+ (archivos JSP, HTML, etc.) de manera más sencilla. Estos se definen en el
+ archivo application.properties.
+
+Prefix: Es la ruta base donde se encuentran las vistas.
+Suffix: Es la extensión del archivo de la vista.
+Por ejemplo, si tienes las siguientes configuraciones en application.properties:
+
+spring.mvc.view.prefix=/WEB-INF/views/
+spring.mvc.view.suffix=.jsp
+
+Y en tu controlador devuelves una vista llamada home, Spring Boot
+ buscará el archivo en la siguiente ruta
+
+ /WEB-INF/views/home.jsp
+ Esto simplifica la referencia a las vistas en los controladores, ya
+ que no necesitas especificar la ruta completa ni la extensión del archivo.
+
+spring.mvc.view.prefix=/views/
+spring.mvc.view.suffix=.jsp
+
+
+
+187. model and view
+
+a mejor forma de manejar datos en una aplicación Spring Boot depende del contexto y de tus necesidades específicas. Aquí hay una breve explicación de cada enfoque:
+HttpSession: Útil para almacenar datos que deben persistir a lo largo de múltiples solicitudes de un mismo usuario. Sin embargo, puede aumentar la complejidad y el uso de memoria del servidor.
+Model: Adecuado para pasar datos a la vista en una sola solicitud. Es simple y directo, pero los datos no persisten entre solicitudes.
+ModelAndView: Combina el modelo y la vista en un solo objeto. Es útil cuando necesitas especificar tanto los datos como la vista en el mismo método.
+
+
+CON MODEL AND VIEW QUEDARIA:
+    @RequestMapping("/addAlien")
+    public ModelAndView addAlien(@RequestParam("aid") int id, @RequestParam("aname") String nombre, ModelAndView mv) {
+        mv.addObject("alien", new Alien(id, nombre));
+        mv.setViewName("addAlien");
+        return mv;
+    }
+
+
+189 model atributte
+
+sirve para :  para pasar datos a la vista en una sola solicitud. Es simple y directo, pero los datos no persisten entre solicitudes.
+
+terminado:
+archivos:
+index.jsp
+
+result.jsp
+addAlien.jsp
+
+<%@ page language="java"%>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+    <body>
+        <h2>Alien Details</h2>
+        <h3>Alien ID: ${alien.aid}</h3>
+        <h3>Alien Name: ${alien.aname}</h3>
+        <p>Welcome to the course ${course} World </p>
+
+        <a href="/">Volver</a>
+    </body>
+</html>
+
+
+clases:
+Alien.java
+
+
+
+HomeController.java
+
+@Controller
+public class HomeController {
+    @RequestMapping("/")
+    public String home() {
+        return "index";
+    }
+
+    @ModelAttribute("course")
+    public String courseName(){
+        return "Java";
+    }
+
+    @RequestMapping("/sumar")
+    public ModelAndView sumar(@RequestParam("num1") int numero1, @RequestParam("num2") int num2, ModelAndView mv) {
+        int result = numero1 + num2;
+        mv.addObject("result", result);
+        mv.setViewName("result");
+        return mv;
+    }
+
+    @RequestMapping("/addAlien")
+    public String addAlien(@ModelAttribute Alien alien) {
+        return "addAlien";
+    }}
+
+
+

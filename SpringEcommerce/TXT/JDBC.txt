@@ -1,0 +1,152 @@
+
+
+steps
+
+first step:
+tener el archivo jar
+
+1. import the packages       import java.sql.*;
+
+2. load driver, y este viene del jar file
+
+3. register driver,
+
+example, we are working from home, and we have same mates working in the office we have to connect
+the database, so we can work properly
+
+4. create connection
+
+5. create statement
+
+7. process the result
+
+8. close the connection, with out leaking information
+
+/*
+           1 import packages: listo solo importar import java.sql.*;
+           2 load and register
+           3 create connection
+           4 create statementw
+           5 execute statement
+           6 process the results
+           7 close
+        */
+
+
+        //paso 3
+        String url = "jdbc:postgresql://localhost:5432/demo";
+        String unname = "postgres";
+        String pass = "0000";
+        String query = "select * from student";
+
+        // load and register: // opcional
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            System.out.println("No se ha podido cargar el driver");
+            throw new RuntimeException(e);
+
+        }
+        // create connection
+        try {
+            Connection con = DriverManager.getConnection(url, unname, pass);// url user contra
+            System.out.println("Conexion a la base de datos con exito");
+            // step 5
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query); // get the results executequery to show and execute to put in the database
+            rs.next();
+            String name = rs.getString("sname");
+            System.out.println("Name: " + name);
+
+            System.out.println(rs.next());// if prints true we have data if prints false theres no data
+
+
+            con.close();
+            System.out.println("Conexion cerrada");
+
+        } catch (SQLException e) {throw new RuntimeException(e);}
+
+
+
+obtener todos los datos de la tabla:
+
+String url = "jdbc:postgresql://localhost:5432/demo";
+        String unname = "postgres";
+        String pass = "0000";
+        String query = "insert into student values(8, 4, 'Puto');";
+
+        // load and register: // opcional
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            System.out.println("No se ha podido cargar el driver");
+            throw new RuntimeException(e);
+
+        }
+        // create connection
+        try {
+            Connection con = DriverManager.getConnection(url, unname, pass);// url user contra
+            System.out.println("Conexion a la base de datos con exito");
+            // step 5
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query); // get the results executequery to show and execute to put in the database
+//            rs.next();
+//            String name = rs.getString("sname");
+//            System.out.println("Name: " + name);
+
+
+            while(rs.next()){ // if while says true theres next row
+                System.out.println(rs.getInt(1) + " - "
+                        + rs.getString(2) + " - " + rs.getString(3) );// prints the data
+                // print all the table
+            }
+
+            con.close();
+            System.out.println("Conexion cerrada");
+            // el siguiente bucle pregunta si hay siguiente columna continuamente
+        } catch (SQLException e) {throw new RuntimeException(e);}
+
+
+
+poner datos en la tabla: ME TIRA ERROR PERO SE AGREGA:
+try {
+            Connection con = DriverManager.getConnection(url, unname, pass);// url user contra
+            System.out.println("Conexion a la base de datos con exito");
+            // step 5
+            Statement st = con.createStatement();
+            ResultSet status = st.executeQuery(query);
+            System.out.println(status);
+
+
+            con.close();
+            System.out.println("Conexion cerrada");
+
+
+no me tira error y se agrega: con este cambiando el query puedo agregar y elminar
+ String url = "jdbc:postgresql://localhost:5432/demo";
+        String unname = "postgres";
+        String pass = "0000";
+        String query = "delete from student where sid IN (6,7,8)";
+
+        // load and register: // opcional
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            System.out.println("No se ha podido cargar el driver");
+            throw new RuntimeException(e);
+
+        }
+        // create connection
+        try {
+            Connection con = DriverManager.getConnection(url, unname, pass);// url user contra
+            System.out.println("Conexion a la base de datos con exito");
+            // step 5
+            Statement st = con.createStatement();
+            int rowsAffected = st.executeUpdate(query);
+            System.out.println("Filas afectadas: " + rowsAffected);
+
+
+            con.close();
+            System.out.println("Conexion cerrada");
+
+        } catch (SQLException e) {throw new RuntimeException(e);}

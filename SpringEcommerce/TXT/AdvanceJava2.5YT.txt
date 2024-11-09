@@ -1,0 +1,66 @@
+Continuacion Video minuto 12:32:00
+
+var se usa para reducir la redundancia de codigo, mejora la legibilidad y
+se obtiene mayor flexibilidad en el mantenimiento del codigo, es solo aplicabble para
+variables locales
+de mes de hacer
+ArrayList obj = new ArrayList();
+se usa var obj = new ArrayList();
+
+
+haciendo un arrayvar nums = new int[10];
+
+sealed classes
+es una clase que puede tener un número limitado de subclases, definidas en el mismo
+archivo donde se declara la sealed class
+
+sealed class A permits B,C{  // le permite a las clases b y c que puedan acceder
+}
+non-sealed class B extends A{
+}
+final class C extends A{
+}
+class d extends B{ // como b es non-sealed se puede extender
+}
+
+record classes
+es una clase especial que se utiliza para modelar datos inmutables de
+una manera concisa y efectiva. Al definir una clase como un record, el compilador
+genera automáticamente métodos como equals(), hashCode(), toString() y métodos de
+acceso para los campos de la clase.
+su caracteristica principial es su inmutabilidad
+
+record Alien(String name, int age) {} // ya trae un constructor y un string method, y
+cada variable que haya es private and final
+
+
+Unit testing JUnit
+
+
+difference between testing and unit testing in java
+
+unit testing is a specific type of testing where individual units or components of a
+software application are tested in isolation from the rest of the system.
+
+and testing is a general type of testing refers to the process of evaluating a softwar
+application or system to ensure that it begaves as expected and meets the speciefied '
+requirements.
+
+
+el indio ensena mal, ahora estoy con coding with John
+
+public class Main {
+    public int add(int numberA, int numberB) {
+        return numberA + numberB;
+    }
+}
+
+el TEST:
+class MainTest {
+    @Test
+    void mainTest(){
+        var calculator = new Main();
+        assertEquals(4, calculator.add(2,2));
+    }
+}
+

@@ -1,0 +1,400 @@
+spring bean XML config
+
+// creando contenedor
+        // en esta linea se crea el objeto
+        ApplicationContext context = new ClassPathXmlApplicationContext();
+        //la anterior linea crea un contenedor y luego con ese contenedor se pueden hacer
+        // :
+        Alien obj = (Alien ) context.getBean("Alien");
+        obj.code();
+
+
+este codigo no funciona
+en el main folder hay q crear un folder Resources con un archivo .xml
+
+resources es asi se parece al formato de maven lo q si de mes de dependencie aparece bean
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="alien" class="org.telusko.Alien" />
+
+</beans>
+
+
+140 scopes
+PREDETERMINADO : singleton
+
+theres differents scope options
+singleton // este se usa
+prototype // este se usa
+estos dos se usan para web o socket webs
+request
+session
+
+
+en singleton va a trabajar con el mismo objeto en cambio
+con prototype se crea un nuevo objeto cada ves q digamos getBean
+
+con prototype se escribe asi:
+    <bean id="alien" class="org.telusko.Alien" scope="prototype" />
+y tiene la salida asi
+Object created
+Compiling
+12
+Object created
+Compiling
+0
+
+en cambio con singleton imprime esto:
+Object created
+Compiling
+12
+Compiling
+12
+
+141 setter injection
+
+si en alien seteamos un valor al age: private int age = 21;
+luego si queremos cambiar hay q hacer una injection
+para eso hay q usar property
+<bean id="alien" class="org.telusko.Alien">
+        <property name= "age" value="12"/>
+</bean>
+
+esto se llama setter injection porque se esta llmando un metodo setter para asignar un valor
+
+142 reff atribute
+
+    // private Laptop lap = new Laptop();  esto no se hace ya que en spring se busca inyectar el objeto
+asi quedaria el xml haciendo referencia a laptop asi podemos crear el objeto:
+<bean id="alien" class="org.telusko.Alien">
+        <property name= "age" value="12"/>
+        <property name="name" value="Rahul"/>
+        <property name="lap" ref="lap1" />
+    </bean>
+    <bean id = "lap1" class = "org.telusko.Laptop">
+    </bean>
+143 constructor injection
+
+si un constructor nomas tiene un parametro en el archivo xml se le puede injectar un valor:
+<bean id="alien" class="org.telusko.Alien">
+        <constructor-arg value="21"/>
+        <constructor-arg ref="lap1"/>
+    </bean>
+
+    <bean id = "lap1" class = "org.telusko.Laptop"/>
+
+putting this way is going to view the sequence if we change the position is going to have a error
+ for solution we can add a type:
+
+         <constructor-arg type = "int" value="21"/>
+         // this only works where both variables are different type
+
+or we can add a name or index:
+index numbers are of the sequence like 0,1,2,3
+age
+lap
+salary
+<constructor-arg index="0" value="21" />
+<constructor-arg index="1" ref="lap1"/>
+<constructor-arg index="2" value="2100" />
+or name:
+<constructor-arg name="age" value="21" />
+<constructor-arg name="lap" ref="lap1"/>
+<constructor-arg name="salary" value="2100" />
+
+or directly in the code we can use
+
+@ConstructorProperties({"age","lap", "salary"})
+    //paremeterized constructor
+    public Alien(int age, Laptop lap, int salary) {
+        System.out.println("Object Alien2 created");
+        this.age = age;
+        this.lap = lap;
+        this.salary = salary;
+    }
+
+
+144 creating interface
+
+TODO EL CODIGO ANTES DE HACER CAMBIOS:
+package org.telusko;
+
+import java.beans.ConstructorProperties;
+
+public class Alien {
+    private int salary;
+    private Laptop lap;   //esto no se hace ya que en spring se busca inyectar el objeto
+    private int age;
+
+    public Laptop getLap() {
+        return lap;
+    }
+    public void setLap(Laptop lap) {
+        this.lap = lap;
+    }
+
+
+
+    public int getAge() {
+        return age;
+    }
+    public void setAge(int age) {
+        System.out.println("Setting age");
+        this.age = age;
+    }
+
+
+    public Alien() {
+        System.out.println("Object Alien created");
+    }
+    @ConstructorProperties({"age","lap", "salary"})
+    //paremeterized constructor
+    public Alien(int age, Laptop lap, int salary) {
+        System.out.println("Object Alien2 created");
+        this.age = age;
+        this.lap = lap;
+        this.salary = salary;
+    }
+
+
+
+    public void code() {
+        System.out.println("Coding Aliens");
+        lap.compile();
+    }
+
+    public int getSalary() {
+        return salary;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+}
+XML FILE:
+<bean id="alien" class="org.telusko.Alien">
+<!--     <constructor-arg  value="21" />
+        <constructor-arg type = "org.telusko.Laptop" ref="lap1"/> -->
+        <constructor-arg name="age" value="21" />
+        <constructor-arg name="lap" ref="lap1"/>
+        <constructor-arg name="salary" value="2100" />
+    </bean>
+
+    <bean id = "lap1" class = "org.telusko.Laptop"/>
+
+
+145 autowired
+para unir deskopt laptop y computer(interface)
+existe autowired by Type y by name
+
+byType: Inyección basada en el tipo del bean.
+Spring busca un bean que coincida con el tipo del campo que se esta inyectando
+byName: Inyección basada en el nombre del bean.
+Se busca un nombre que coincida con el nombre del bean.
+
+<bean id="alien" class="org.telusko.Alien" autowire="byType">  // byName
+        <constructor-arg name="age" value="21" />
+        <constructor-arg name="com" ref="desk"/>
+</bean>
+<bean id="Lap" class="org.telusko.Laptop"/>
+<bean id="desk" class="org.telusko.Deskopt" primary = "true"/>
+
+146 primary bean:
+
+se puede hacer primario un bean o falso si no:
+solo funciona si hay una confusion
+<bean id="desk" class="org.telusko.Deskopt" primary = "true"/>
+
+
+147 lazy init bean:
+lazy initialization of the bean
+técnica de retrasar la creación de un bean hasta que realmente se necesite. Esto puede ser útil
+en varias situaciones y tiene varias ventajas:
+
+Ventajas de la Inicialización Perezosa:
+Mejora del Rendimiento: Si tienes muchos beans en tu aplicación, inicializarlos todos al inicio
+puede aumentar el tiempo de arranque. Con la inicialización perezosa, solo se crean los beans
+que se utilizan, lo que puede reducir el tiempo de inicio.
+148 getbean by type
+habla de que es mejor hacer asi:
+
+        Alien alien = context.getBean("alien", Alien.class);
+es mejor asi porq no necesito hacer un casting explícito, lo que hace que el código
+sea más limpio y fácil de leer.más claro y fácil de entender para otros desarrolladores que lean tu código.
+Es evidente que esperas un bean de tipo Alien.
+y mas seguro.
+
+y es bueno especificar el nombre ya que no hay confusion en el sistema
+
+
+149 inner bean
+Uso: Se utiliza para encapsular la configuración de un bean que es específico para otro bean.
+
+<bean id="alien" class="org.telusko.Alien" autowire="byType">
+        <property name="age" value="21" />
+        <property name="com">
+            <bean id="com1" class="org.telusko.Laptop" primary="true"/> // inner bean for the alien
+        </property>
+    </bean>
+
+
+ CONSTRUCTOR VS PROPERTY
+ constructor-arg:
+ Uso: Se utiliza para inyectar dependencias a través del constructor de una clase.
+
+property:
+Uso: Se utiliza para inyectar dependencias a través de métodos setter (métodos de
+establecimiento) o directamente en propiedades públicas
+
+asi quedaria el app.java antes de java based config:
+ApplicationContext context = new ClassPathXmlApplicationContext("resources.xml");
+        Alien alien = context.getBean("alien", Alien.class);
+        System.out.println(alien.getAge());
+        alien.code();
+
+        Deskopt desk = context.getBean(Deskopt.class);
+        desk.compile();
+
+150 Java based config  (AnnotationConfigApplicationContext)
+
+en xml usabamos bean tag ahora usamos bean annotation
+
+ahora dejamos el xml configuration apart
+y usamos java based config
+
+crar clase config con
+@Configuration
+
+151 bean name
+
+that in the java based config tenemos que poner el metodo bean en el nombre del contexto tipo:
+main: we can put a name too, that will be deskopt22
+
+ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        Deskopt dt = context.getBean("deskopt1", Deskopt.class);
+        dt.compile();
+
+        AppConfig:
+@Configuration
+public class AppConfig {
+    @Bean(name = {"deskopt", "desk"})
+    public Deskopt deskopt() {
+        return new Deskopt();
+    }
+}
+
+singleton y prototype en java based config
+
+singleton:  singleton es una única instancia del bean que se crea y se comparte en todo el
+contexto de la aplicación
+@Component
+public class MySingletonBean {
+    // Implementación del bean
+}
+
+
+prototype es una nueva instancia del bean que se crea cada vez que se solicita. Esto significa que cada vez que se
+llama a getBean(), se obtiene una nueva instancia.
+@Scope("prototype")
+@Component
+public class MyPrototypeBean {
+    // Implementación del bean
+}
+
+prototype segun indian:
+@Configuration
+public class AppConfig {
+
+    @Bean(name = {"deskopt"})
+    @Scope("prototype")
+    public Deskopt deskopt() {
+        return new Deskopt();
+    }
+
+}
+153 Autowire Java
+
+154 primary and qualifier
+se usa qualifier cuando tenes el problema de que matching bean but found 2: deskopt,laptop
+se matchean dos veces entonces:
+@Bean
+    public Alien alien(@Qualifier("deskopt") Computer com) { // se imprimiria el compile de deskopt
+        Alien obj = new Alien();
+        obj.setAge(4);
+        obj.setCom(com);
+        return obj;
+    }
+
+o se puede usar primary:
+@Primary
+
+155 component stereotype annotation
+
+we cant talk to spring like saying that he is responsable to manage certain beans
+
+@Component se agrega cuando alguna clase es parte de algun proyecto de spring
+y ayuda a spring framework a entender que Alien es una clase ponele donde spring tiene
+que manejar los objetos de si
+
+y luego en la config le agregamos un scaner
+para especificar los paquetes que deben ser escaneados en busca de componentes Spring
+
+156 autowire field, constructor, setter
+
+luego en config al no haber nada si yo quiero correr el programa
+va a dar un null ya que te manda el compile de computer por lo tanto hay q hacer un autowire
+y pero al hacer autowire van a haber 2 con compile entonces
+se agrega @Qualifier("laptop")
+
+// laptop iria en case small
+
+public class Alien {
+    private int age;
+
+    @Autowired  // mejor escribir autowire donde esta el setter
+    @Qualifier("laptop")
+    private Computer com;
+...}
+
+en laptop se le puede cambiar el nombre de la forma que
+@Component("laptop1")
+
+el autowired
+se encarga de hacer la inyeccion, y esta se puede hacer en 3 niveles
+1. field injection // en el campo private Computer com;
+2. constructor injection  la haces arriba del constructor
+3. setter injection la haces arriba del setter
+
+pero es mejor escribir autowire donde esta el seetter
+
+@Repository
+Propósito: Se utiliza para marcar una clase como un componente que interactúa con la base de datos.
+Es responsable de la lógica de acceso a datos.
+Funcionalidad:
+Maneja la comunicación con la base de datos (por ejemplo, consultas, inserciones, actualizaciones).
+
+@Controller
+
+
+157. qualifier esta por arriba de primary
+
+
+158. scope and value annotation
+
+se le puede inyectar un valor a una variable con
+@Value("21")
+
+
+y agregarle un scope
+
+@Scope("prototype")
+public class Alien {...}
+
+
+159. SPRING TO SPRING BOOT
+
+movemos al otro proyecto:

@@ -1,0 +1,623 @@
+Desarrollador Junior de Java: Este es un rol de nivel de entrada para los desarrolladores que están comenzando su carrera.
+Como el curso cubre Core Java, JDBC, y Servlet and JSP, estarías bien equipado para este rol.
+Desarrollador Junior de Spring Boot: Dado que el curso cubre Spring Framework, Spring MVC, Spring Data JPA y Spring Boot,
+podrías aplicar para roles que requieran conocimientos de Spring Boot.
+Desarrollador Junior de Microservicios: Como el curso cubre Microservicios y Spring Boot, podrías ser un buen candidato
+para roles que impliquen el desarrollo de microservicios.
+Terminal:
+    *Se ejecuta un archivo en terminal de la siguiente forma: javac archivo.java
+
+
+hello world java:
+public class main {
+    public static void main(String[] args) {
+        System.out.println("hello world");
+    }
+}
+
+
+
+Types of data:
+           integer: int
+           double: double          , for bigger numbers and decimal n
+           booleans = boolean            true / false
+           char = char           can hold any character, it goes with single quot
+           string
+
+variables: se declara una variable de esta forma
+
+public class MyProfile {
+	public static void main(String[] args) {
+    String name = "Mateo";
+    int age = 19;
+    double desiredSalary = 54000.00;
+    char gender = 'm';
+    boolean lookingForJob = true;
+	}
+}
+
+
+Compound
+Addition (+=)
+Subtraction (-=)
+Multiplication (*=)
+Division (/=)
+Modulo (%=)   es como que divide y te da el resultado de lo que sobra
+
+equals and not equals
+boolean sameNumberOfSongs = songsA == songsB;      // si son iguales va a tirar true
+boolean differentLength = albumLengthA != albumLengthB; // si son diferentes  true
+
+
+greater than or equal to, >= boolean result = x <= y;
+or less than or equal to, <=
+
+
+equals:
+System.out.println(line1.equals(line2));
+
+final keyword: it has values that cant be manipulated, like           final int year = 1992;
+
+public class BankAccount {
+  	public static void main(String[] args){
+      double balance = 1000.75;
+      double amountToWithdraw = 250;
+      double updatedBalance = balance - amountToWithdraw;
+      double amountForEachFriend = updatedBalance/3;
+      boolean canPurchaseTicket = amountForEachFriend >= 250;
+      System.out.println(canPurchaseTicket);
+      System.out.println("I gave each friend " + amountForEachFriend + "...");
+    }
+}
+
+
+
+oop: classes and objects
+data: str boolean int double , we can represent more complex data like a entity in the real word with the classes, like student,
+classes: with this one we can create a custom data type, we have to create a class, in this one we can define the attributes(name,year),
+that can be the type of data we want
+functionality: we can create a function to view the promedium to see if he has honors
+ objects: the objects will be the instance of the class like student object 1, 2,3
+
+the fundamental concept of oop is the class, a class is a set of instruction that describe how an instance can behave and what information it contains
+
+public class Store {
+  public Store() {
+    System.out.println("I am inside the constructor method.");
+  }
+public class Car {
+  String color = "red";
+  boolean isElectric = false;
+  int cupHolders = 4;
+
+  public static void main(String[] args) {
+    Car myCar = new Car();
+    System.out.println(myCar.color); // Prints: red
+  }
+}
+
+en intelliJ esta la clase Dog.java para jugar con ella
+
+public class Dog {
+    String raza;
+    boolean Dueno;
+    int age;
+
+
+    public Dog(String dogRaza, boolean perrdueno, int dogYears) {
+        System.out.println("Constructor invoked!");
+        raza = dogRaza;
+        Dueno = perrdueno;
+        age = dogYears;
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Main method started");
+        Dog fido = new Dog("poodle", false, 4);
+        Dog nunzio = new Dog("shiba inu", true, 12);
+        boolean isFidoOlder = fido.age > nunzio.age;
+        int totalDogYears = nunzio.age + fido.age;
+        System.out.println("Two dogs created: a " + fido.raza + " and a " + nunzio.raza);
+        System.out.println("The statement that fido is an older dog is: " + isFidoOlder);
+        System.out.println("The total age of the dogs is: " + totalDogYears);
+        System.out.println("Main method finished");
+    }
+}
+
+METHODS: se puede reutilizar un metodo simplemente llamandolo, asi se define un metodo:
+ public means that other classes can access this method. We will learn more about that later in the course.
+ The void keyword means that there is no specific output from the method. We will see methods that are not void later
+ in this lesson, but for now, all of our methods will be void.
+
+se crea un metodo de esta forma: public void checkBalance(){}
+
+public class Store {
+  // instance fields
+  String productType;
+
+  // constructor method
+  public Store(String product) {
+    productType = product;
+  }
+
+  // advertise method
+  public void advertise() {
+		System.out.println("Selling " + productType + "!");
+    System.out.println("Come spend some money!");
+  }
+   public void greetCustomer(String customer){
+      System.out.println("Welcome to the store, " + customer + "!");
+    }
+  // main method
+  public static void main(String[] args) {
+    Store lemonadeStand = new Store("Lemonade");
+    lemonadeStand.greetCustomer("Laura");  // Adding Parameters
+    lemonadeStand.advertise();
+
+
+  }
+}
+
+scope: a method is a task that an object of a class performs. We mark the domain of this task using curly braces:
+ {, and }. Everything inside the curly braces is part of the task. This domain is called the scope of a method.
+
+
+returns: We return a value by using the keyword return
+
+
+habla de que no  podemos usar variables fuera de metodos,  si se pueden usar si hacemo un statement de modo return
+Methods are a powerful way to abstract tasks away and make them repeatable. They allow us to define behavior for classes,
+so that the Objects we create can do the things we expect them to. Let’s review everything we have learned about methods so far.
+
+Defining a method : Method declarations will declare a method’s return type, name, and parameters
+Calling a method : Methods are invoked with a . and ()
+Parameters : Inputs to the method and their types are declared in parentheses in the method signature
+Changing Instance Fields : Methods can be used to change the value of an instance field
+Scope : Variables only exist within the domain that they are created in
+Return : The type of the variables that will be output are declared in the method declaration
+
+
+                  Indian Guy:
+the word and in java is represented by &
+the word or in java is represented by |
+the word not in java is represented by ^ or !
+the short circuit is represented by && or || or !!
+int y = 6;
+int x = 7;
+boolean a = x > y && x > y;   // true
+
+
+result = y%2 == 0 ? 0: 1;  recordemos q % es el modulo, que es el resto de la division. Si es 0 va a dar 0 q seria true, si da 1 es falso
+
+
+Switch statement
+ es un mecanismo y es parecido a un interruptor
+         int n = 3;
+         switch (n){
+             default:
+                 System.out.println("Your number is not in the range of 1 to 4");
+                 break;
+             case 1:
+                 if (n == 1)
+                     System.out.println("One");
+                 break;
+             case 2:
+                     System.out.println("Two");
+                 break;
+             case 3:
+                 System.out.println("Three");
+                 break;
+             case 4:
+                 System.out.println("Four");
+                 break;
+
+loops:
+while, do while, for
+while:
+        int n = 1;
+        while (n<=3)
+        {
+            System.out.println("hi " + n);
+            int j = 1;
+            while (j <= 2) {
+            //nested while loop
+            }
+                System.out.println("Nested " + j);
+                j++;
+            }
+            n++;
+        }
+        System.out.println("bye" + n);
+
+do while loop:
+     int n = 1;
+        do {
+            System.out.println("hi " + n);
+            n++;
+        }while (n <= 3);
+
+for loop: in this loop we can mention three different statement
+in one line, the first is the initialization,
+the second is the condition, and the third is the increment.
+
+for (int n=1;n<=3;n++)
+        {
+            System.out.println("hi " + n);
+        }
+and after we can add to this a nested loop and it would be like:
+        int n=1;
+        for (;n<=5;)
+        {
+            System.out.println("DAY: " + n);
+            for(int j=1;j<=9;j++){
+                System.out.println(" " + (j+8)+ " - " + (j+9));
+                n++;}
+
+
+when i read a file while loop make sense.
+
+OOP: classes and objects.
+
+
+to compile the java code we neee JDK java development kit, when we type a code in the
+terminal, it will compile it.
+jre java runtime environment is the environment that runs the java code and pass it to the
+jvm which is the java virtual machine.
+
+class Computer{
+    public void playMusic(){
+    System.out.println("playing music");
+    }
+    public String playGame(int cost){
+        if (cost>=3)
+            return "Game";
+        else
+            return "nothing";
+    }
+}
+
+public class Demo
+{
+    public static void main(String[] args)
+    {
+        Computer c=new Computer();
+        c.playMusic();
+        String str = c.playGame(2);
+        System.out.println(str);
+    }
+}
+array, we can save in array differents variables
+int num []= {5, 6,7};
+
+and we can create an array this way and put some different values on the array this way:
+int num1[] = new int[3];
+        num1[0] = 1;
+        num1 [1] = 8;
+        num1 [2] = 9;
+we can print this manually
+System.out.println(num1[2]);
+or
+in a for loop
+for(int i=0; i<3; i++){
+            System.out.println(num[i]);
+        }
+
+este crea una matriz de doble array, 3x4
+        int nums [] [] = new int [3][4]; // este array se llama jagged
+        for(int i = 0; i<3;i++)
+        {
+            for(int j = 0; j<4;j++)
+            {
+                System.out.print(nums[i][j] + " ");
+            }
+            System.out.println();
+        }
+este se podria aplicar tmb es un bucle for-each:
+
+for(int n[] : nums){
+    for(int m : n)
+    {
+        System.out.print(m+" ");
+    }
+    System.out.println();
+}
+nums es una matriz bidimensional (un arreglo de arreglos). El bucle externo
+ (for(int n[] : nums)) recorre cada arreglo n en la matriz nums. Luego, el
+ bucle interno (for(int m : n)) recorre cada elemento m en el arreglo actual n
+
+
+en el bucle for de mes de poner la cantidad de num que hay en nuestra variable
+ podemos poner para que se imprima todou  i < nums.length
+ for(int i=0; i< < nums.length; i++)
+
+bucle enhanced for loop : este es un bucle que recorre cada elemento de un arreglo
+
+int[] nums = new int[4];
+nums[0] = 1;
+nums[1] = 2;
+nums[2] = 3;
+nums[3] = 4;
+for (int n : nums) {
+    System.out.println(n);
+}
+
+String Buffer and String builder: the both provide you a way
+to implement inmutable strings, the difference is that string
+buffer is thread safe and string builder is not.
+Stringbuffer:
+        StringBuffer sb = new StringBuffer("Hello");
+        sb.append(" Mateo");
+        sb.deleteCharAt(1);
+        sb.delete(0, 10);
+        System.out.println(sb);
+
+
+
+static keyword: the static keyword is used to define a class field
+ or method that is not specific to any instance of a class.
+
+we can use a static variable inside a static method
+but we cannot use a non-static variable inside a static method
+
+private: everytime that will create a variable private no one in the outside world
+can use it and see it, only if i create a method in the class where is the private variable
+and returning it we can see it.
+
+
+
+extends: extends is used to create a class that inherits from another class.
+we use this key to acces from a subclass child to a father class father.
+
+
+
+super(): super() is used to call a constructor of the super/father class.
+class A{
+    public A(){
+        System.out.println("in A");
+    }
+    public A(int i) {
+        System.out.println("in A int");
+    }
+}
+
+class B extends A {
+    public B(){
+        super();
+        System.out.println("in B");
+    }
+    public B(int i) {
+        this();
+            System.out.println("in B int");
+    }
+}
+public class Demo {
+    public static void main(String[] args){
+        B obj = new B(6);
+    }
+}
+
+
+
+
+camel casing: es la sintaxis que se usa a la hora de nombrar variables, metodos.
+// clases comienzan con Mayus - Calc, Runable - MyData
+// variables comienzan con minusculas  -  show() - showMymarks()
+// constantes todo mayuscula - PIE, BRAND
+
+
+
+anonymus object is a object that we dont name it
+new A();
+
+
+
+inheritance: is a way to create a new class that inherits from an existing class.
+like to take features of something else and add to it. that allows to not have
+to much redundancy
+
+like in Calc i have sub, add and in the advencedcalc i have multiply and div
+but to add the methods of the calc to the advencedcalc we need to extends
+public class tools.Calc.AdvCalc extends Calc
+
+despues si quiero agregar una clase mas avanzada
+class tools.VeryAdvCalc extends tools.Calc.AdvCalc
+
+esta seria la clase mas hija que contiene todas las clases ya extendidas por lo tanto
+deberia ejecutar esta a la hora de usar el codigo
+
+
+hay diferentes niveles de inheritance: esta el single level(a / b /c )
+y el multilevel(a, aa y c) que java no soporta es decir dos padres y un hijo.
+
+
+method overriding : is a way to override a method of a parent class.
+consiste en que puedo tener el mismo metodo en dos clases y que en la clase hija
+le puedo hacer un override, es decir, puedo cambiar el metodo de la clase padre en
+la clase hija
+class A {
+    public void show() {
+        System.out.println("A show");
+    }
+}
+class B extends A {
+    public void show() {
+        System.out.println("B show");
+    }
+}
+
+
+packages: is a way to group classes and other resources.
+is always a good idea to put your classes in a package, we can create
+a complex structure
+
+java.util.ArrayList; is a package that contains a class that we can use to store
+
+when you try to import a package you can put import other.*  *(it means
+import all)
+import tools.*;
+
+mvnrepository.com
+in this website i can find many libraries, like you want to do
+something but don't want to write the code enterily by yourself i can use libraries
+example i want to connect my app to a mongodb wich is a database
+
+
+
+ modifiers: is a way to control the access of a class, method, variable, etc.
+public, private, protect and default.
+private= only we can use it in the same class
+public = can be used anywhere
+protected= we can use protected in the same package and in the same class, if a method
+or a variable is going to be used in a subclass we should use protected
+default = in the same package
+
+
+
+polymorphism: is a way to create a class that can be used in many ways.
+poly(many)  morphism(behavior) like we use to behave different in terms
+of the context where we are
+there are two types:
+compile time polymorphism:if the behavior is deffined in the compile time(overloading
+is a part of compile time)
+run time polymorphism: if the behavior is deffined in the run time(overriding)
+
+
+Dynamic method Dispatch: is a way to call a method that is going to be used at run time.
+run time polymorphism:
+          A obj = new B();
+          obj.show();
+          obj = new B();
+          obj.show();
+
+
+refence to superclass: es posible crear una referencia para crear un nuevo objeto
+ponele Computadora ob1 = new Laptop();
+
+run time polymorphism:
+      A obj = new B();
+            obj.show();
+            obj = new B();
+            obj.show();
+
+
+
+final keyword,  can be used with a variable,method, or a class
+once you assign the value final you can't change it
+
+final method: is a way to create a method that can't be overriden
+final class: is a way to create a class that can't be extended
+final variable: is a way to create a variable that can't be changed
+
+
+
+object class: is a way to create a class that is a reference to an object
+// en este metodo estoy comparando los atributos de obj1 y obj2, si son
+iguales me tira true si no falso, se llamaria en main asi:
+boolean result = obj2.equals(obj1);
+System.out.println(result);
+//metodo para comparar
+public boolean equals(Laptop that) {
+        return this.brand.equals(that.brand) && this.price == that.price;
+    }
+
+tambien puedo crear el metodo directamente con intellij ponendo
+generate / equals and hashcode
+
+class Laptop {
+     int price;
+     String brand;
+     int serial;
+
+    public Laptop(int price, String brand, int serial) {
+        this.price = price;
+        this.brand = brand;
+        this.serial = serial;
+    }
+
+    @Override
+    public String toString() {
+        return "Laptop{" +
+                "brand='" + brand + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Laptop laptop = (Laptop) o;
+        return price == laptop.price && brand.equals(laptop.brand);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = price;
+        result = 31 * result + brand.hashCode();
+        return result;
+    }
+}
+//
+public class Main {
+    public static void main(String[] args) {
+        Laptop obj1 = new Laptop(1000,"Samsung", 1231);
+        Laptop obj2 = new Laptop(1000,"Samsung", 12);
+        boolean result = obj2.equals(obj1);
+        System.out.println("Objeto 1 = objeto 2? " + result);
+        System.out.println("La marca de la laptop es " + obj1.price + " y su serial es " + obj1.serial);
+        obj1.toString();
+    }
+}
+
+
+downcasting:Downcasting, on the other hand, is the process of converting
+a superclass reference back into a subclass reference
+
+a laptop "is" a computer
+lo que significa que el portatil ha obtenido sus funciones de computadora
+
+upcasting: Upcasting is the process of converting a
+subclass reference into a superclass reference.
+
+class Animal {
+    void eat() {
+        System.out.println("animal is eating...");
+    }
+}
+
+class Dogg extends Animal {
+    void bark() {
+        System.out.println("dog is barking...");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Animal a = new Dogg();  // upcasting
+        Dogg d = (Dogg) a;  // downcasting
+        d.bark();
+    }
+}
+
+
+wrapper classes: Una clase wrapper en Java es una clase que envuelve un tipo de dato
+primitivo, proporcionando métodos de utilidad para trabajar con ese tipo de dato de
+manera orientada a objetos. Por ejemplo, Integer envuelve el tipo primitivo int
+
+ for every primitive type we are going to have a class for it, so if i
+want to work with int i can work with integer, char -> Character, double -> Double
+
+Integer num = 10; // Integer is a wrapper class for int
+        System.out.println("Original number: " + num);
+
+  boxing/UNBOXING consist in take a primitive value and storing that in a object
+  int num = 10; // Primitive int
+  Integer num1 = num; // Autoboxing - converting int to Integer
+  int num2 = num1.intValue(); // UNBOXING - converting Integer to int
+
+  int num3 = Integer.parseInt(str);  is a method to convert Str to Int
+
+
+FINISH: -> AdvanceJava.txt
+
+

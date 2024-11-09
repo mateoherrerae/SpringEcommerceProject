@@ -1,0 +1,158 @@
+Maven is a build automation tool primarily used for Java projects. It helps manage
+the project's build, reporting, and documentation from a central piece of information.
+Maven uses a Project Object Model (POM) file to manage the project's build, dependencies,
+and configuration.
+
+if i want to build a project and i have to connect my java code to a database, we need
+a connector, with sql i need mysql connector
+
+Hibernate es un framework(es un conjunto de herramientas y reglas que te ayudan a
+construir aplicaciones de software de manera más rápida y organizada) de mapeo
+objeto-relacional (ORM) para Java que facilita el mapeo de objetos Java a tablas en
+una base de datos relacional y viceversa.
+
+
+libreria famosa: mvnrepository.com
+para agregar algun conector copia el codigo de maven, y luego se pega
+abajo de version, y se agrega un corchete dependencies  y se pega y se refresca
+la pagina
+
+
+Maven es una herramienta de gestión de proyectos ampliamente utilizada
+en el ecosistema de Java.
+Utiliza un formato XML para la configuración del proyecto y define convenciones
+para la estructura del proyecto.
+Maven simplifica la gestión de dependencias, la construcción del proyecto y la
+generación de informes.
+Es compatible con la integración con IDEs como IntelliJ IDEA, Eclipse, NetBeans, entre
+ otros.
+
+ getting dependicies
+
+ Archetypes, maven provide something called archetypes wich is a templating tool
+ Cuando se crea un nuevo proyecto en Maven, se puede utilizar un "archetype" para
+  generar la estructura inicial del proyecto, incluyendo la configuración básica,
+  la estructura de directorios y los archivos necesarios. Esto permite a los
+  desarrolladores comenzar rápidamente con un proyecto bien estructurado y con
+  las dependencias iniciales configuradas
+
+
+cada projecto de maven va a taner un archivo pom(projecto object model)
+
+every library has, GAV (group id, artifact id, version)
+se refiere a las coordenadas que identifican de manera única un artefacto
+en un repositorio de dependencias. Estas coordenadas incluyen el Group ID, el
+Artifact ID y la versión del artefacto.
+
+
+maven tiene varias templates/plantillas o conocidas como archtypes que si quiero hacer un proyecto com de web application, o
+uno de Spring cada uno tiene su propio template, se pone. Cada uno ser caracteriza por
+tener distintos plugins se puede decir o distintos paquetes por defectos.
+
+libreria famosa: mvnrepository.com
+para agregar algun conector copia el codigo de maven, y luego se pega
+abajo de version, y se agrega un corchete dependencies  y se pega y se refresca
+la pagina
+
+
+Maven es una herramienta de gestión de proyectos ampliamente utilizada
+en el ecosistema de Java.
+Utiliza un formato XML para la configuración del proyecto y define convenciones
+para la estructura del proyecto.
+Maven simplifica la gestión de dependencias, la construcción del proyecto y la
+generación de informes.
+Es compatible con la integración con IDEs como IntelliJ IDEA, Eclipse, NetBeans, entre
+ otros.
+
+ getting dependicies
+
+ Archetypes, maven provide something called archetypes wich is a templating tool
+ Cuando se crea un nuevo proyecto en Maven, se puede utilizar un "archetype" para
+  generar la estructura inicial del proyecto, incluyendo la configuración básica,
+  la estructura de directorios y los archivos necesarios. Esto permite a los
+  desarrolladores comenzar rápidamente con un proyecto bien estructurado y con
+  las dependencias iniciales configuradas
+
+
+cada projecto de maven va a taner un archivo pom(projecto object model)
+
+every library has, GAV (group id, artifact id, version)
+se refiere a las coordenadas que identifican de manera única un artefacto
+en un repositorio de dependencias. Estas coordenadas incluyen el Group ID, el
+Artifact ID y la versión del artefacto.
+
+
+maven tiene varias templates/plantillas o conocidas como archtypes que si quiero hacer un proyecto com de web application, o
+uno de Spring cada uno tiene su propio template, se pone. Cada uno ser caracteriza por
+tener distintos plugins se puede decir o distintos paquetes por defectos.
+
+
+JUNITS:
+
+
+ctrl + shift + T crea un Test de la clase en la que estas
+
+existe el assertEquals, assertNotEquals
+assertTrue, assertFalse, , assertNotTrue, assertNotFalse
+
+assertNull , assertNotNull
+
+
+el main:
+public class Main {
+    public int add(int numberA, int numberB) {
+        return numberA + numberB;
+    }
+
+    public char determineLetterGrade(int grade) {
+        if (grade < 0) {
+            throw new IllegalArgumentException("Grade must be a positive integer");
+        } else if (grade >= 90 && grade <= 100) {
+            return 'A';
+        } else if (grade >= 80 && grade <= 89) {
+            return 'B';
+        } else if (grade >= 70 && grade <= 79) {
+            return 'C';
+        } else if (grade >= 60 && grade <= 69) {
+            return 'D';
+        } else if (grade >= 0 && grade <= 59) {
+            return 'F';
+        }
+        return 0;
+    }
+    public static void main(String[] args) {
+        Main mainn = new Main();
+        System.out.println(mainn.determineLetterGrade(72));
+    }
+}
+
+el TEST:
+class MainTest {
+    @Test
+    void mainTest(){
+        var calculator = new Main();
+        assertNotEquals(5, calculator.add(4,2));
+    }
+    @Test
+    void mainTest2(){
+        var calculator = new Main();
+        assertNotEquals(5, calculator.add(4,2));
+    }
+    @Test
+    void mainTest3(){
+        var calculator = new Main();
+        assertEquals('A', calculator.determineLetterGrade(90));
+    }
+    @Test
+    void a62EqualstoD(){
+        var aux = new Main();
+        assertEquals('D', aux.determineLetterGrade(60));
+    }
+
+    //assertThrows
+    @Test
+    void negativaOneShouldReturnIlegalrArgumentException(){
+        var grader = new Main();
+        assertThrows(IllegalArgumentException.class, () -> grader.determineLetterGrade(-10));
+    }
+}

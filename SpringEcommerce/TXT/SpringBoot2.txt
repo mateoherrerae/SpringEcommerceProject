@@ -1,0 +1,118 @@
+IOC
+inversion of control: the ability to change the behavior of a class at runtime.
+
+a programmer has differents rules or papers,
+iensa en un director de orquesta. En lugar de que cada músico decida cuándo tocar,
+el director (IoC) controla cuándo y cómo deben tocar.
+En programación, IoC significa que el control del flujo del programa se invierte: en
+lugar de que tu código principal controle todo, un contenedor o framework toma el control
+y llama a tu código cuando es necesario.
+
+DI dependency injection
+nyección de Dependencias (Dependency Injection, DI)
+Imagina que tienes un coche y necesitas un motor para que funcione. En lugar de construir el motor
+dentro del coche, alguien más te da el motor ya hecho y tú solo lo colocas en el coche. Esto es
+básicamente lo que hace la inyección de dependencias.
+
+DI es una técnica para proporcionar las dependencias de un objeto desde afuera.
+IoC es un principio donde el control del flujo del programa se invierte a un contenedor o framework.
+
+
+
+spring boot vs spring
+
+we have to do a lot of things to print something in spring, a lot of configurations...etc
+ut in spring boot we don't have to do that.
+
+
+
+context:
+se refiere al ApplicationContext, que es el contenedor central del framework Spring.
+Este contenedor es responsable de gestionar los beans (objetos) y sus dependencias, así como de proporcionar funcionalidades adicionales como la gestión de eventos, la internacionalización y el acceso a recursos12. El ApplicationContext extiende la funcionalidad del BeanFactory, proporcionando una forma más completa y orientada a aplicaciones para gestionar los beans.
+
+El método getBean se utiliza para recuperar un bean del contenedor de Spring. Hay
+ varias formas de usar este método:
+
+Por nombre: context.getBean("nombreDelBean")
+Por nombre y tipo: context.getBean("nombreDelBean", TipoDeClase.class)
+
+wiring significa :
+, wiring se refiere al proceso de configurar y ensamblar beans dentro del contenedor de Spring. Este proceso puede ser manual o automático (autowiring).
+
+Autowiring es una característica que permite a Spring resolver automáticamente las dependencias entre beans sin necesidad de configurarlas explícitamente. Hay varios modos de autowiring12:
+
+no: No se realiza autowiring. Las dependencias deben ser configuradas manualmente.
+byName: Spring busca un bean cuyo nombre coincida con el nombre de la propiedad.
+byType: Spring busca un bean cuyo tipo coincida con el tipo de la propiedad.
+constructor: Spring utiliza el constructor de la clase para inyectar las dependencias.
+autodetect: Spring intenta primero autowire por constructor y, si falla, por tipo.
+
+
+
+160:
+spring annotations:
+bueno vimos
+@Component: para que spring sepa que es una clase q la va a usar spring
+@Primary para marcar que una clase va a ser llamada primero si no tiene qualifier
+@Qualifier para marcar que una clase va a ser llamada siempre que se haya una
+coincidencia de nombre se superpone de primary
+@Autowire: para que spring sepa que es una dependencia de un bean
+
+161 Different layers:
+
+La aplicación va a enviar una señal al servidor.
+
+El servidor envía una señal a la base de datos, y luego la base de datos
+le envía una señal al servidor.
+
+Finalmente, el servidor envía la señal a la aplicación. El servidor es el
+responsable de aceptar y enviar datos.
+
+El servidor tiene diferentes capas:
+
+Controlador: es la capa que recibe las peticiones, realiza la lógica de negocio
+ y hace las consultas a la base de datos.
+
+Service: es la capa que realiza las consultas a la base de datos.
+
+Repository: es la capa que realiza las consultas a la base de datos. aca esta la capa
+DAO (Data Access Object) que se encarga de la lógica de negocio.
+
+
+162 Service class
+
+es una anotación que se utiliza para marcar una clase como un "servicio".
+Esto significa que la clase contiene la lógica de negocio de la aplicación
+y es responsable de realizar operaciones específicas,
+como interactuar con los repositorios y manejar la lógica de la aplicación.
+
+
+163 Repository layer
+repository va a ser el responsable en conectar la database
+
+se crean packages con
+repo
+service
+model
+
+@Repository
+public class LaptopRepository {
+    public void save(Laptop laptop) {
+        System.out.println("Saving laptop in Database(Repository) ");
+    }
+}
+
+y esta llamado por el service:
+@Service
+public class LaptopService {
+    @Autowired
+    private LaptopRepository repo;
+
+    public void addLaptop(Laptop lap) {
+        System.out.println("Adding laptop:" );
+        repo.save(lap);
+
+    }
+}
+
+asi es mucho mas facil de implementar, y ver.

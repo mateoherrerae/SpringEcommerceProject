@@ -1,0 +1,1008 @@
+Project 1 Introduction
+
+input: if we want that the user prints something we can use the class Scanner, first of all we have to import
+import java.util.Scanner;
+Scanner sc = new Scanner(System.in);
+
+Abstract keyword:
+we cant create an object of abstract class
+Clase abstracta: No se puede instanciar, lo que significa que no puedes crear un objeto de una clase abstracta.
+Sin embargo, puede servir como una clase base (superclase) para otras clases.
+abstract class Animal {
+    //...
+}
+
+
+Método abstracto: Un método declarado con la palabra clave abstract se conoce como método abstracto. No
+tiene implementación, solo una declaración (es decir, no tiene cuerpo de método {}).
+public abstract void drive();
+
+
+Inner class: basically a class inside a classs
+it initialize like:
+A obj = new A();
+obj.show();
+A.B obj1 = obj.new B();
+
+inner class when b is STATIC, y si b es static  a no puede ser static
+A.B obj1 = new A.B();
+        obj1.config();
+
+Anonymus inner class:(clase interna): an inner class that does not have a name and is defined and
+instantiated at the same time. In this case, the anonymous inner class is implementing the
+show() method of class B.
+asi se puede proveer una implementacion diferente para algun metodo ya existente
+inner class:
+A obj = new B(){
+//metodo:
+        };
+
+
+abstract and anonymus inner class:
+
+abstract class A{
+    public abstract void show();
+}
+
+public static void main(String[] args) {
+        A obj = new A()
+        {
+            public void show(){
+                System.out.println("en show de main");
+            }
+        };
+        obj.show();
+    }
+
+
+Interfaces:
+In default methods are public abstract in interfaces
+In default variables are static and final in interfaces
+
+las interfaces en Java son como un conjunto de reglas que una clase debe
+seguir si quiere ser considerada del tipo de esa interfaz
+
+Esto permitirá que las clases que implementen la interfaz A solo necesiten
+definir la funcionalidad de los métodos show() y config(), sin depender de una
+jerarquía de clases
+
+
+implements keyword: si una clase implementa una interfaz,
+para luego poder usarla extenderla se usa implements no extends,
+
+class to class -> extends
+interface to class -> implements
+interface to interface -> extends
+
+interface A{
+    int age = 10; //final and static
+    String name = "Jay";
+    void show();  //abstract and public
+
+}
+interface X{
+//una clase puede implementar varias interfaces
+void config();
+}
+interface Y extends X{
+
+}
+class B implements A,X,Y{
+
+    public void show() {
+        System.out.println("shows B");
+    }
+    public void config() {
+        System.out.println("config B");
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        A obj;
+        obj = new B();
+        obj.show();
+        System.out.println(obj.age);
+        X obj2 = new B();
+                obj2.config();
+    }
+}
+
+
+need of the interface:
+lets say that we are going to start working in a company, and we need a work laptop, but we dont have
+a laptop, or a desktop, but it is important to make the aplication more flexible
+
+
+interface Computer{
+     void code();
+}
+class Laptop implements Computer{
+    public void code(){
+        System.out.println("code, compile, run");
+    }
+}
+class Desktop implements Computer{
+    public void code(){
+        System.out.println("code, compile, run, faster");
+    }
+}
+class Developer{
+    public void devApp(Computer lap){
+        lap.code();
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Computer lap = new Laptop();
+        Computer desk = new Desktop();
+        Developer mateo = new Developer();
+        mateo.devApp(desk);
+    }
+}
+
+
+
+enums(constant):
+la palabra clave enum se utiliza para definir un tipo de dato especial que
+representa un conjunto fijo de constantes. Por ejemplo, en tu código, la
+enumeración Status define las constantes Running, Failed, Pending y Success.
+Puedes usar estas constantes en lugar de números o cadenas para representar
+estados específicos en tu programa.
+
+enum Status{
+    Running, Failed, Pending, Success;
+}
+public class Main {
+    public static void main(String[] args) {
+
+        Status [] ss = Status.values();
+        System.out.println(ss[1]);
+        for(Status s : ss){
+            System.out.println(s +" : " + s.ordinal());
+
+    }
+}
+
+enum if else and switch
+
+enum Status{
+    Running, Failed, Pending, Success;
+}
+public class Main {
+    public static void main(String[] args) {
+        Status s = Status.Failed;
+        switch (s){
+            default -> System.out.println("Theres no value");
+            case Failed -> System.out.println("The case has failed ");
+            case Pending -> System.out.println("Pending");
+            case Success -> System.out.println("Success");
+        }
+        if(s == Status.Pending){
+            System.out.println("System is pending");
+        }
+        else if(s == Status.Success){
+            System.out.println("All good!");
+        }
+        else if(s == Status.Failed){
+            System.out.println("Failed");
+        }
+    }
+}
+
+enum is a class: we cant extend enum to another class, but we can create constructors
+enum Laptop{
+    Mackbook(2030), Xps(1090), Surface, ThinkPad(1299);
+    private int price;
+    private Laptop(){
+        price = 500;
+    }
+    private Laptop(int price){
+        this.price = price;
+    }
+    public int getPrice() {
+        return price;
+    }
+    public void setPrice(int price) {
+        this.price = price;
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+//        Laptop lap = Laptop.Mackbook;
+//        System.out.println(lap.getPrice());
+        for (Laptop lap : Laptop.values()) {
+            System.out.println(lap + " : " + lap.getPrice());
+        }
+    }
+}
+
+annotations: simply means a supplement to the compiler or to the runtime,
+or we also call it a as a metadata.
+@Override: @Override es una anotación específica que le indica al compilador
+que el método anotado está destinado a sobrescribir un método en la superclasesirve
+para ayudarle al compilador que tiene que hacerle un override a un
+metodo y si da error es que no esta haciendo correctamente el overrride.
+ponele si tenemos un metodo de de 4plabras podemos hacerle un override si es q
+qremos al de abajo
+
+@deprecated: means that you can use it but dont use it
+
+types of interface: we can divide the interface in 3 parts
+in interface we can only declare methods remember that mateo
+Normal interface: when we have 2 or more methods is a normal interface
+
+Functional interface(sam): sam= single abstract method , is when we have only one method
+marker interface:is an interface wich has no methods, it usefull to update something
+to the compiler
+
+Marker Interface: serialization, that means you can take the object and you can store the values of the object
+in your hard drive, it means that when we leave a game we leave like some data, and then when
+we enter to the game, the data is should be loaded again.(deserialization)
+to do this we have to create a class and do it with the help of marker interface
+
+
+to make a functional interface we have to declare an annotation:
+@FunctionalInterface
+interface a{
+    void show();
+}
+class B implements a{
+    public void show(){
+        System.out.println("B");
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        a obj = new B();
+        obj.show();
+    }
+}
+
+lambda expression:
+Una expresión lambda en Java es una forma de representar
+una instancia de una interfaz funciona
+de esto con lambda expression podemos de esto a esto::
+@FunctionalInterface
+interface a{
+    void show(int i, String s);
+}
+public class Main {
+    public static void main(String[] args) {
+       // a obj = new a() {
+            //@Override
+         //   public void show(int i) {
+                    //System.out.println("show" + i);
+          //  }
+       // };
+       //a esto:
+       a obj = (int i, String s ) ->  System.out.println("show" + i + s);
+       obj.show(4, "puto");
+    }
+}
+
+@FunctionalInterface
+interface a {
+    int add(int i, int j);
+}
+public class Main {
+    public static void main(String[] args) {
+         a obj = (i , j) -> i + j;
+         int result = obj.add(1,2);
+         System.out.println(result);
+    }
+}
+
+
+Exceptions:
+Compile time error(syntax error)
+
+Runtime error(runtime error): A runtime error occurs during the execution of a program.
+ It is an error that happens while the program is running, rather than during compilation.
+ Runtime errors can be caused by various factors such as invalid input, division by zero,
+ accessing an array out of bounds, or trying to access a resource that is not available.
+
+Logical error(the most difficult to solve, is when the result its given but it is
+unexpected)
+
+Exception handling Try, Catch:
+we have to pass in catch the error that we are expecting
+public class Main {
+    public static void main(String[] args) {
+        int i = 0;
+        int result = 0;
+        int nums[] = new int[3];
+        nums[0] = 0;
+        nums[1] = 2;
+        nums[2] = 3;
+        String str = null;
+        try {
+            result = 18 / nums[1];
+            System.out.println(str.length());
+            System.out.println(nums[2]);
+            System.out.println(nums[6]);
+        }
+        catch (ArithmeticException e){
+            System.out.println("You cant divide by zero");
+        }
+        catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("Stay in your limit;");
+        }
+        catch (Throwable e){ // // throwable es la clase padre de las excepciones
+        //por lo tanto tiene que ir lo mas abajo posible
+            System.out.println("Something went wrong");
+        }
+        System.out.println(result);
+    }
+}
+
+
+
+
+85 exception hierarchy:
+The class Throwable divides in two: Exception and Error
+The Error class is the superclass of all errors that are not checked exceptions, and
+takes care of threadeath, IOerror, Virtual Machine error, or our of memory error.
+
+with exceptions we can take care of
+
+Unchecked exceptions: runtimexception(arithmetic,arrayoutof, null,etc)
+checked exceptions: sql exception, IOexception
+
+86 throw keyword
+throw: el programa busca un bloque catch
+ que maneje esa excepción específica de tipo
+public class Main {
+    public static void main(String[] args) {
+        int i = 0;
+        int result = 0;
+        try {
+            result = 18 / i;
+            if (i == 0) {
+                throw new ArithmeticException();
+            }
+        }
+        catch (ArithmeticException e){
+            System.out.println("You cant divide by zero");
+        }
+        System.out.println(result);
+        System.out.println("bye");
+    }
+}
+
+custom exception:
+if we have to create a custom exception we have to create a class extended by exception or
+runtime exception,
+class MateoException extends Exception{
+    public MateoException(String str){
+        super(str);
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        int i = 20;
+        int j = 0;
+        try {
+            j= 18 / i;
+            if (j == 0) {
+                throw new MateoException("You cant dividee  by zero");
+            }
+        }
+        catch (MateoException e){
+            j = 18/i;
+            System.out.println("Mateo exceptioni" + e);
+        }
+        System.out.println("bye");
+    }
+}
+
+88 throws keyword:
+it has a different working compared throw,
+The throws keyword in Java is used in method signatures to declare that the
+method may throw certain types of exceptions. When a method is declared with
+throws for a specific exception type, it means that the method can potentially
+throw an exception of that type during its execution, and the calling code
+must handle or propagate that exception.
+
+ducking exceptions using throws (anejar excepciones usando throws)
+-------------------
+una forma de crear una excepcion es asi:
+try{
+  Class.forName("Demo");
+}
+catch (ClassNotFoundException e){
+   System.out.println("Class not founded");
+}
+otra forma puede ser asi:
+
+public void show() throws ClassNotFoundException{
+    Class.forName("Demo");
+}
+// en main
+A obj = new A();
+try {
+   obj.show();
+}
+catch (ClassNotFoundException e) {
+   System.out.println("Esa clase no existe");
+}
+
+printStackTrace: prints this throwabel and its backtrace to the standard error stream.
+it helps in debugging.
+
+
+:
+
+89 User Input using BufferedReader and Scanner
+Scanner es más fácil de usar y tiene métodos convenientes para leer diferentes tipos de
+datos, pero puede ser menos eficiente en situaciones donde se requiere un alto rendimiento.
+Scanner sc = new Scanner(System.in);
+        int num = sc.nextInt();
+        System.out.println(num);
+
+BufferedReader es más eficiente en términos de rendimiento al leer grandes cantidades
+de datos, pero su uso es un poco más complicado ya que no tiene métodos para convertir
+directamente tipos de datos primitivos.
+This one can take an input from anywhere, a file, from the network,
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+public class Main {
+    public static void main(String[] args) throws IOException {
+        System.out.println("enter a number");
+        InputStreamReader in = new InputStreamReader(System.in);
+        BufferedReader br = new BufferedReader(in);
+        int num = Integer.parseInt(br.readLine());
+        System.out.println(br);
+        br.close(); // it always a good idea to close the resources
+    }
+}
+
+
+90 try with resources
+
+finally: este bloque se va a ejecutar cualquiera sea la exception que se produzca en el try,
+tmb es importante cerrar los resources en el finally block
+int num = 0;
+        BufferedReader br = null;
+        try {
+            InputStreamReader sc = new InputStreamReader(System.in);
+            br = new BufferedReader(sc);
+            num = Integer.parseInt(br.readLine());
+            System.out.println(num);
+
+        }
+        finally {
+            br.close();
+        }
+
+
+haciendo esto no hace falta cerrar el resource y se cierra solo:
+esto se llama try with resources:
+try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
+    num = Integer.parseInt(br.readLine());
+    System.out.println(num);
+}
+
+cualquier clase que contenga el autoclossable it means that it will be closed automatically
+
+
+
+91 threads: En Java, los threads (hilos) son unidades de ejecución independientes que
+permiten que un programa realice múltiples tareas simultáneamente. Puedes crear threads
+ en Java extendiendo la clase Thread o implementando la interfaz Runnable.
+
+
+92 multiple threads:
+
+habla de como hacer cosas thread, se puede hacer extendiendo una clase con thread
+estos dos metodos corren al mismo tiempo:
+
+class a extends Thread{
+    public void run(){
+        for (int i = 0; i < 100; i++) {
+            System.out.println("min");
+            try {
+                Thread.sleep(122);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+}
+class b extends Thread{
+    public void run(){
+        for (int i = 0; i < 100; i++) {
+            System.out.println("maximaa");
+        }
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        a obj = new a();
+        b obj1 = new b();
+
+//  93 thread priority and sleep
+//se puede poner una prioridad a la hora de ejecutar cierto codigo con thread, 5 es la default, 10 es la max
+//y 1 la minima, se puede saber la prioridad de algo usando el metodo getPriority() y se puede poner una
+//prioridad usando el metodo setPriority(), o tambien se pueden usar constantes como max_priority, min_priority
+
+        obj.setPriority(8);
+        obj1.setPriority(Thread.MAX_PRIORITY);
+        System.out.println(obj1.getPriority());
+        obj.start();
+        obj1.start(); // el start hace q se inicie algo es como la personaq disparaeunacarrera
+
+
+
+    }
+}
+
+
+94 runnable vs thread:
+It is generally recommended to implement the Runnable interface rather than
+extending the Thread class. By implementing Runnable, you separate the task
+being performed from the thread management, which provides better flexibility and
+reusability.  PODEMOS IMPLEMENTAR RUNNABLE DE LA SIGUIENTE FORMA:
+NO VA A TENER LOS METODOS DE THREAD:
+
+
+
+class a implements Runnable{
+    public void run(){
+        for (int i = 0; i < 10; i++) {
+            System.out.println("min");
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+}
+
+class b implements Runnable{
+    public void run(){
+        for (int i = 0; i < 10; i++) {
+            System.out.println("maximaa");
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Runnable aa = new a();
+        Runnable bb = new b();
+        Runnable cc = ()  -> {
+            for (int i = 0; i < 10; i++) {
+                System.out.println("EN CC");
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        Thread t1 = new Thread(aa);
+        Thread t2 = new Thread(bb);
+        Thread t3 = new Thread(cc);
+        t1.start();
+        t2.start();
+        t3.start();
+
+    }
+}
+
+
+
+95 race condition(condicion de carrera)
+When multiple threads are accessing and potentially modifying shared data (mutable
+objects), it can lead to race conditions and unexpected behavior. To ensure thread
+safety with mutable objects, synchronization mechanisms or other thread-safe data
+structures should be used to allow only one thread to access the object at a time.
+
+
+if we have to do a mutable object we have to make thread safe:
+
+simply meands that only one thread can only one thread can work with with that
+at one point
+
+join(): The join() method in Java is used to wait for a thread to finish its execution
+before the current thread continues. When you call join() on a thread, the current
+thread will pause and wait for the thread it’s called on to complete
+class Counter{
+    int count;
+    public synchronized void increment(){
+        count++;
+    }
+}
+class a implements Runnable{
+
+    public void run(){
+    }
+}
+class b implements Runnable{
+    public void run(){
+    }
+}
+
+public class Main {
+    public static void main(String[] args) throws InterruptedException {
+        Counter c = new Counter();
+        Runnable a = ()  -> {
+            for (int i = 1; i <= 2000; i++) {
+                c.increment();
+            }
+        };
+        Runnable b = ()  -> {
+            for (int i = 1; i <= 2000; i++) {
+                c.increment();
+            }
+        };
+
+        Thread t1 = new Thread(a);
+        Thread t2 = new Thread(b);
+
+        t1.start();
+        t2.start();
+        t1.join();
+        t2.join();
+        System.out.println(c.count);
+    }
+}
+synchronized: synchronized en Java se utiliza para crear un bloque de código
+sincronizado o un método sincronizado. Cuando un método o bloque se declara como
+synchronized, solo un hilo puede ejecutar ese método o bloque sincronizado a la
+vez. Esto ayuda a prevenir condiciones de carrera y garantiza la seguridad de los hilos
+
+
+96 thread states: The Thread class has several states:
+New: start()  ->  * Runnable run()  -> Running    ->  stop(but is deprecated so dont stop)  Dead
+                                       ^= sleep() or wait()  Waiting notify * ->
+
+97 collection api
+when we talk abouty collection we are talking about interface, but when is collectionS
+it is your class
+
+
+98 how to use collection api:
+
+collection has a set of methods that allow you to work with a collection of objects
+list                 queue                 set
+->arraylist +        ->dequeue            ->hashset +
+->linkedlist                             ->linkedhashset
+                                         -> treeSet
+
+
+Collection<Integer> nums = new ArrayList();   // <> se usa para atribuir un tipo de de dato a un array
+        //where is Collections i can put List to
+        nums.add(2);
+        nums.add(3);
+        nums.add(4);
+        nums.add(5);
+        for (int o : nums) {
+            System.out.println(o);
+        }
+
+
+99 set:
+is a collection of unique values
+
+Collection<Integer> nums = new TreeSet<>();
+        nums.add(1);
+        nums.add(2);
+        nums.add(3);
+        nums.add(4);
+        Iterator<Integer> values = nums.iterator();
+        while (values.hasNext())
+            System.out.println(values.next());
+
+100 map:
+map, is a part of collection concept
+
+// digamos q trabjamos con el array [56,23,67,92]
+// y le quiero agregar un valor string a cada uno es posible mediante el concepto
+//de key and value pair
+
+//keys cannot be repeated, they are unique
+
+Map<String, Integer> students = new HashMap<>();
+students.put("Juan", 12);
+students.put("Maria", 13);
+students.put("Pedro", 14);
+students.put("Ana", 15);
+
+System.out.println(students.get("Juan"));
+
+for (String name : students.keySet()) {
+    System.out.println(name + " " + students.get(name));
+}
+
+difference hashmap and hashtable:
+
+Hashtable es sincronizado, lo que significa que es seguro para subprocesos múltiples.
+Esto puede llevar a una sobrecarga de rendimiento en aplicaciones donde la concurrencia
+no es un problema.
+
+HashMap no es sincronizado, lo que lo hace más eficiente en entornos de un solo
+subproceso. Si necesitas sincronización en un HashMap, puedes usar
+Collections.synchronizedMap() para envolverlo.
+
+
+101 comparator vs comparable
+
+comparator is a interface, that u can use to specify your own logic for sorting
+Comparator<Integer> com = new Comparator<>(){
+    @Override
+    public int compare(Integer i, Integer j) {
+        if(i%10> j%10)
+            return 1;
+        else
+            return -1;
+    }
+};
+
+List<Integer> nums = new ArrayList<>();
+nums.add(12);
+nums.add(22);
+nums.add(3);
+Collections.sort(nums, com);
+System.out.println(nums);
+
+
+o se pude hacer de otra forma como:
+import java.util.*;
+
+class Student{
+    int age;
+    String name;
+
+    public Student(int age, String name) {
+        this.age = age;
+        this.name = name;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "age=" + age +
+                ", name='" + name + '\'' +
+                '}';
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args)  {
+
+        Comparator<Student> com = new Comparator<>(){
+            @Override
+            public int compare(Student i, Student j) {
+                if(i.age> j.age)
+                    return 1;
+                else
+                    return -1;
+            }
+        };
+
+        List<Student> studs = new ArrayList<>();
+        studs.add(new Student(122, "Mateo"));
+        studs.add(new Student(12, "VIcky"));
+        studs.add(new Student(1234, "Lola"));
+
+
+        Collections.sort(studs, com);
+
+        for (Student student : studs) {
+            System.out.println(student);
+        }
+
+    }
+}
+
+
+
+con lambda expresion:
+public class Main {
+    public static void main(String[] args)  {
+
+        Comparator<Student> com = (i, j) -> Integer.compare(i.age, j.age);
+        List<Student> studs = new ArrayList<>();
+        studs.add(new Student(122, "Mateo"));
+        studs.add(new Student(12, "VIcky"));
+        studs.add(new Student(1234, "Lola"));
+        Collections.sort(studs, com);
+        for (Student student : studs) {
+            System.out.println(student);
+        }
+    }
+}
+
+102: need of stream api
+array asList:
+List<Integer> nums = Arrays.asList(4, 2 , 5 , 1, 5);
+
+
+formas de iterar en una lista:
+
+1: normal for loop
+for (int i = 0; i < nums.size(); i++) {
+            System.out.println(i);
+        }
+
+2: enhaced for loop
+for (int i : nums) {
+            System.out.println(i);
+        }
+
+3 MEJOR)o otro forma de iterar sobre los numero de una lista es:
+nums.forEach(num -> System.out.println(num));
+
+
+La Stream API en Java es una herramienta que nos permite operar de manera más
+eficiente y concisa con colecciones de datos, como listas o conjuntos. En lugar de
+utilizar bucles tradicionales para procesar elementos de una colección, la Stream
+API nos permite realizar operaciones como filtrado, mapeo, ordenamiento y reducción
+de datos de forma más declarativa.
+
+
+103: for each method
+nums.forEach(num -> System.out.println(num));
+el for each method anterior es aplicado de esta funcion que a la vez es convertible a una
+lambda expression
+
+Consumer<Integer> con = new Consumer<Integer>() {
+    @Override
+    public void accept(Integer num) {
+        System.out.println(num);
+    }
+};
+
+nums.forEach(con);
+// y esto puede pasarse como
+Consumer<Integer> con = num -> System.out.println(num);
+
+y esto se puede pasar a
+nums.forEach(num -> System.out.println(num));
+
+
+104 stream api:
+
+stream is an interface, that you cant reuse it and thats why the name is stream
+
+
+List<Integer> nums = Arrays.asList(4, 2 , 6 , 1, 5, 10);
+
+Stream<Integer> s1 = nums.stream();
+Stream<Integer> s2 = s1.filter( n -> n % 2 == 0);// se aplica filtro de que sea par
+Stream<Integer> s3 = s2.map(n -> n * 2);// se multiplica por 2 cada numero
+int result = s3.reduce(0, (a, b) -> a + b); // se suman todos los numeros
+
+// s1.forEach(n -> System.out.println(n));
+// s2.forEach(n -> System.out.println(n));
+//s3.forEach(n -> System.out.println(n));
+System.out.println(result);
+
+
+o se puede hacer todo esto en una linea:
+
+int result = nums.stream()
+                .filter(n -> n % 2 == 0)
+                .map(n -> n * 2)
+                .reduce(0, (a, b) -> a + b);
+System.out.println(nums);
+
+
+predicate is an interface that contains the method test
+    usando predicate:
+    Predicate<Integer> p = new Predicate<Integer>() {
+                @Override
+                public boolean test(Integer integer) {
+                    if (integer % 2 == 0)
+                        return true;
+                        else return false;
+                }
+            };
+
+    o como lambda expression:
+
+List<Integer> nums = Arrays.asList(4, 2 , 6 , 1, 5, 10);
+        int result = nums.stream() // and if i want to use multiple threads  i can use : int result = nums.parallelStream()
+                .filter( n -> n % 2 == 0) // testeando que se imprima los numeros pares y por detras hay esto:
+                // Predicate<Integer> p = (n) -> n % 2 == 0;
+                .map(n -> n * 2) // Function<Integer, Integer> f = n -> n * 2;
+                 .reduce(0, (a, b) -> a + b);
+        System.out.println(result);
+
+
+106 parallelStream in java:
+int size = 10_000;
+        List<Integer> nums = new ArrayList<>(size);
+
+        Random ran = new Random();
+        for(int i = 0; i < size; i++){
+            nums.add(ran.nextInt(100));
+        }
+
+        long startSeg = System.currentTimeMillis();
+        int sum2 = nums.stream()
+                .map(x -> {
+                    try {Thread.sleep(1);
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    return x*2;
+                })
+                .mapToInt(i -> i)
+                .sum();
+        long endSeg = System.currentTimeMillis();
+
+        long startSegg = System.currentTimeMillis();
+        int sum3 = nums.parallelStream()
+                .map(x -> {
+                    try {Thread.sleep(1);
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    return x*2;
+                })
+                .mapToInt(i -> i)
+                .sum();
+        long endSegg = System.currentTimeMillis();
+
+        System.out.println(sum2 + " " + sum3);
+        System.out.println("seq " +(endSeg - startSeg));
+        System.out.println("seq Parallel " +(endSegg - startSegg));
+
+
+107 optional class in java
+
+List<String> list = Arrays.asList("Navin", "Maria", "Mateo", "Maria");
+
+String name = list.stream()
+       .filter(s -> s.startsWith("M"))
+        .filter(s -> s.length() >= 5)
+       .findFirst()
+       .orElse("No name found");
+System.out.println(name);
+
+
+
+108 method reference:
+
+List<String> list = Arrays.asList("Navin", "Maria", "Mateo");
+
+List<String> uNames = list.stream()
+        .map(String :: toUpperCase)
+        .toList(); // this method convert into a list all the elements of the stream
+uNames.forEach(System.out::println); // this method print all the elements of the list
+
+ 109 constructor reference
+tiene q haber arriba una clase Student con sus getters,setters y string method:
+
+List<String> names = Arrays.asList("Jane", "John", "Bob", "Alice");
+        List<Student> students = new ArrayList<>();
+//        for(String name : names){
+//            students.add(new Student(name));
+//        }o se puede hacer asi:
+
+        students = names.stream()
+                // .map(name -> new Student(name)) o se puede hacer asi como constructor reference:
+               .map(Student::new)
+                .toList();
+        System.out.println(students);
+
+
+FIN de UDEMY
+-> MAVEN
+paso a yt

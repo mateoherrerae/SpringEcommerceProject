@@ -1,0 +1,160 @@
+JDBC template
+
+this template will help us to
+connect with database
+fire queries
+process data
+get output
+
+165. we created a student and in
+
+166. creating service and repository
+
+update, inserting, deleting : executeupdate
+
+select query : executequery
+
+
+169 row mapper
+
+fetching the data that we stored
+
+toma dos parametros,
+resultSet , lo q es lo que nos devuelve
+rowNum es el numero de fila
+
+RowMapper: Se utiliza para mapear cada fila de un ResultSet a un objeto Java.
+Es una interfaz que permite transformar los datos de la base de datos en objetos de dominio
+
+mapper lambda:
+public List<Student> findAll() {
+        String sql = "select * from student";
+        RowMapper<Student> mapper = (ResultSet rs, int rowNum) -> {
+
+                Student s = new Student();
+                s.setRollNo(rs.getInt("rollno"));
+                s.setName(rs.getString("name"));
+                s.setMarks(rs.getInt("marks"));
+                return s;
+        };
+        return jdbc.query(sql, mapper);
+    }
+
+mapper normal:
+RowMapper<Student> mapper = new RowMapper<Student>() {
+            @Override
+            public Student mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+                Student s = new Student();
+                s.setRollNo(rs.getInt("rollno"));
+                s.setName(rs.getString("name"));
+                s.setMarks(rs.getInt("marks"));
+                return s;
+            }
+        };
+o se puede hacer una lambda expression mas chica tvia:
+toddo el codigo mas lambda expression
+@Repository
+public class StudentRepo {
+
+    private JdbcTemplate jdbc;
+
+    public JdbcTemplate getJdbc() {
+        return jdbc;
+    }
+    @Autowired
+    public void setJdbc(JdbcTemplate jdbc) {
+        this.jdbc = jdbc;
+    }
+
+    public void save(Student s){
+        String sql = "insert into student(rollno, name, marks) values(?,?,?)";
+        int rows = jdbc.update(sql, s.getRollNo(), s.getMarks(), s.getMarks());
+        System.out.println(rows + " effected");
+    }
+
+    public List<Student> findAll() {
+        String sql = "select * from student";
+        return jdbc.query(sql, (rs, rowNum) ->{
+
+            Student s = new Student();
+            s.setRollNo(rs.getInt("rollno"));
+            s.setName(rs.getString("name"));
+            s.setMarks(rs.getInt("marks"));
+            return s;
+        });
+    }
+}
+
+y el StudentsService:
+@Service
+@Primary
+public class StudentService {
+
+    private StudentRepo repo;
+
+    public StudentRepo getRepo() {
+        return repo;
+    }
+
+    @Autowired
+    public void setRepo(StudentRepo repo) {
+        this.repo = repo;
+    }
+
+    public void addStudent(Student s) {
+        repo.save(s);
+    }
+
+    public List<Student> getStudents() {
+        return repo.findAll();
+    }
+}
+y main:
+
+ApplicationContext context = SpringApplication.run(SpringJdbcExApplication.class, args);
+
+
+		Student s = context.getBean(Student.class);
+		s.setRollNo(12);
+		s.setName("Navin");
+		s.setMarks(78);
+
+		StudentService service = context.getBean(StudentService.class);
+
+		service.addStudent(s);
+
+		List<Student> students = service.getStudents();
+		System.out.println(students);
+
+
+
+
+170 jdbc postgres
+we have to only change the pom.xml and the application.configuration
+y para trabajar con h2 solo hace falta la dependencia de h2 q te lo configura automaticamente
+
+
+
+maven file
+<dependency>
+    <groupId>org.postgresql</groupId>
+    <artifactId>postgresql</artifactId>
+    <version>42.6.0</version>
+</dependency>
+
+
+and add the url and the driver class
+
+
+y en spring no hace falta agregar el url en tu propia clase si no que existe un
+archivo application.properties que es el archivo de configuracion de spring
+y aca vos pasas la url y el driver class
+
+spring.datasource.url=jdbc:postgresql://localhost:5432/telusko
+spring.datasource.username=
+spring.datasource.password=
+spring.datasource.driver-class-name=
+
+
+
